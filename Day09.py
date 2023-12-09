@@ -1,15 +1,19 @@
 import time
 
+def get_steps(line):
+    steps = [line.copy()]
+    while not all(value == 0 for value in steps[-1]):
+        l = steps[-1]
+        new = []
+        for i in range(len(l)-1):
+            new.append(l[i+1] - l[i])
+        steps.append(new)
+    return steps
+
 def part_one():
     sum = 0
     for line in lines:
-        steps = [line.copy()]
-        while not all(value == 0 for value in steps[-1]):
-            l = steps[-1]
-            new = []
-            for i in range(len(l)-1):
-                new.append(l[i+1] - l[i])
-            steps.append(new)
+        steps = get_steps(line)
         steps[-1].append(0)
         for i in range(len(steps)-2,-1,-1):
             s = steps[i]
@@ -20,13 +24,7 @@ def part_one():
 def part_two():
     sum = 0
     for line in lines:
-        steps = [line.copy()]
-        while not all(value == 0 for value in steps[-1]):
-            l = steps[-1]
-            new = []
-            for i in range(len(l)-1):
-                new.append(l[i+1] - l[i])
-            steps.append(new)
+        steps = get_steps(line)
         steps[-1].insert(0, 0)
         for i in range(len(steps)-2,-1,-1):
             s = steps[i]
